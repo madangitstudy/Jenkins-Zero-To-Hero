@@ -6,13 +6,8 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/madangitstudy/Jenkins-Zero-To-Hero.git'
-            }
-        }
-
-        stage('Build') {
+       
+       stage('Build') {
             steps {
                 sh 'mvn clean package'
             }
