@@ -1,20 +1,29 @@
 pipeline {
   agent none
   stages {
-    stage('Back-end') {
+    stage('Back-end - Java Hello World') {
       agent {
-        docker { image 'maven:3.8.1-adoptopenjdk-11' }
+        docker { image 'openjdk:11-jdk-slim' }
       }
       steps {
-        sh 'mvn --version'
+        // Compile and run a Java Hello World application
+        sh '''
+        echo "public class HelloWorld { public static void main(String[] args) { System.out.println(\\"Hello, World from Java!\\"); }}" > HelloWorld.java
+        javac HelloWorld.java
+        java HelloWorld
+        '''
       }
     }
-    stage('Front-end') {
+    stage('Front-end - Python Application') {
       agent {
-        docker { image 'node:16-alpine' }
+        docker { image 'python:3.10-alpine' }
       }
       steps {
-        sh 'node --version'
+        // Run a simple Python script
+        sh '''
+        echo "print('Hello, World from Python!')" > hello.py
+        python hello.py
+        '''
       }
     }
   }
